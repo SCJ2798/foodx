@@ -30,8 +30,7 @@ class AppBars extends AppBar {
             ),
           ),
           bottom: PreferredSize(
-              preferredSize:
-                  Size(preferedWidth(context, 1), preferedHeight(context, 0.1)),
+              preferredSize: Size(preferedWidth(context, 1), 96),
               child: Container(
                   padding: PadMarg.a16,
                   child: TextFormField(
