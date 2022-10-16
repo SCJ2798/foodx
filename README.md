@@ -2,7 +2,11 @@
 
 Food exploring Application 
 
-## Getting Started
+- To see Demo of application , [CLICK HERE](https://bitzlab.lk/projects/foodx/#/)
+
+
+
+# Getting Started
 
 This project is a starting point for a Flutter application.
 
@@ -16,5 +20,6 @@ For help getting started with Flutter development, view the
 samples, guidance on mobile development, and a full API reference.
 
 ## Developer
+
 - CHATHURANGA JAYAWARDANA @ BITZLAB
 - https://bitzlab.lk
