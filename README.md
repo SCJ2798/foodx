@@ -21,9 +21,3 @@ samples, guidance on mobile development, and a full API reference.
 
 ## Developer
 
-- [CHATHURANGA JAYAWARDANA](https://github.com/SCJ2798) @ BITZLAB
-- https://bitzlab.lk
-
-<div style="padding:8px"> 
-<img src="https://bitzlab.lk/img/bitzlab.svg" width="128"/>
-</div>
