@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:foodx/env/color.dart';
 
 class TxtStyle extends TextStyle {
+  
   static final String _kFontFamily = "Poppins";
 
   TxtStyle.onlySize(double size)

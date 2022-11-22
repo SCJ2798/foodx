@@ -9,7 +9,6 @@ import 'package:foodx/pages/common_widget/app_bars.dart';
 import 'package:foodx/pages/components/category_item.dart';
 import 'package:foodx/pages/search_city.dart';
 import 'package:foodx/pages/shop_view_card.dart';
-import 'package:foodx/pages/shop_view_page.dart';
 import 'package:foodx/seeds/shops.dart';
 
 class HomePage extends StatefulWidget {
@@ -26,9 +25,7 @@ class _HomePageState extends State<HomePage> {
     {"img": "assets/img/3.png", "name": "Dinner", "selected": false},
     {"img": "assets/img/4.png", "name": "Desser", "selected": false},
   ];
-
   final places = shops;
-
   final _searchCityController = TextEditingController();
 
   @override
@@ -126,6 +123,37 @@ class _HomePageState extends State<HomePage> {
                 }
               },
             ),
+          ],
+        ),
+      ),
+      drawer: Drawer(
+        child: Column(
+          children: [
+            const DrawerHeader(
+              child: Text("AA"),
+            ),
+            ListTile(
+                onTap: () {},
+                contentPadding: PadMarg.a12,
+                leading: Icon(Icons.person),
+                title: Text(
+                  "Local Guider",
+                  style: TxtStyle.custom(16, kBlack),
+                ),
+                shape: Border(
+                    bottom:
+                        BorderSide(width: 1, color: kBlack.withOpacity(0.1)))),
+            ListTile(
+                onTap: () {},
+                contentPadding: PadMarg.a12,
+                leading: Icon(Icons.food_bank_outlined),
+                title: Text(
+                  "Shops",
+                  style: TxtStyle.custom(16, kBlack),
+                ),
+                shape: Border(
+                    bottom:
+                        BorderSide(width: 1, color: kBlack.withOpacity(0.1)))),
           ],
         ),
       ),

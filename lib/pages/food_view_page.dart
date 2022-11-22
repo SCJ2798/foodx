@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:foodx/channel/whatsapp_channel.dart';
 import 'package:foodx/env/color.dart';
 import 'package:foodx/env/size.dart';
 import 'package:foodx/env/style.dart';
 import 'package:foodx/models/Food.dart';
-import 'package:foodx/pages/components/FoodTile.dart';
-import 'package:foodx/pages/components/img.dart';
 import 'package:foodx/pages/components/review_card.dart';
 
 class FoodViewPage extends StatefulWidget {
@@ -131,7 +128,10 @@ class _FoodViewPageState extends State<FoodViewPage> {
             heroTag: 'whatsapp_btn',
             backgroundColor: kPrimaryColor,
             child: Icon(Icons.whatsapp),
-            onPressed: () {},
+            onPressed: () async {
+              await WhatsappChannel.instance
+                  .sendWhatsppMsg("+94763840285", "POST");
+            },
           ),
           Space.w(12),
           FloatingActionButton(

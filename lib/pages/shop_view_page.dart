@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:foodx/channel/whatsapp_channel.dart';
 import 'package:foodx/env/color.dart';
 import 'package:foodx/env/size.dart';
 import 'package:foodx/env/style.dart';
@@ -225,14 +226,17 @@ class _ShopViewPageState extends State<ShopViewPage> {
           FloatingActionButton(
             heroTag: 'whatsapp_btn',
             backgroundColor: kPrimaryColor,
-            child: Icon(Icons.whatsapp),
-            onPressed: () {},
+            child: const Icon(Icons.whatsapp),
+            onPressed: () async {
+              await WhatsappChannel.instance
+                  .sendWhatsppMsg("+94763840285", "Hi ....");
+            },
           ),
           Space.w(12),
           FloatingActionButton(
             heroTag: 'phone_btn',
             backgroundColor: kPrimaryColor,
-            child: Icon(Icons.phone),
+            child: const Icon(Icons.phone),
             onPressed: () {},
           ),
         ],
