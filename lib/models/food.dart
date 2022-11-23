@@ -1,23 +1,38 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:foodx/models/review.dart';
 
 enum FoodStatus { AVALIABLE, NOT_AVALIABLE }
 
 class Food {
   String? name;
-  List<PriceType>? priceTypes;
+  List<dynamic>? priceTypes;
   dynamic status;
   String? about;
   String? imgUrl;
+  String? menu;
   List<Review>? reviews;
 
-  Food({
-    this.name,
-    this.priceTypes,
-    this.status,
-    this.about,
-    this.imgUrl,
-    this.reviews,
-  });
+  Food(
+      {this.name,
+      this.priceTypes,
+      this.status,
+      this.about,
+      this.imgUrl,
+      this.reviews,
+      this.menu});
+
+  factory Food.toPayload(QueryDocumentSnapshot snap) {
+    final doc = snap.data() as Map<String, dynamic>;
+    return Food(
+        name: doc['name'],
+        about: doc['desc'],
+        status: 0,
+        menu: doc['menu'],
+        priceTypes:
+            doc['portion'].map((p) => PriceType.fromDocSnap(p)).toList(),
+        imgUrl: "",
+        reviews: []);
+  }
 
   String get getStatus {
     switch (this.status) {
@@ -29,7 +44,7 @@ class Food {
   }
 }
 
-enum PriceTypeInst { SMALL, MEDIUM, LARGE }
+enum PriceTypeInst { SMALL, MEDIUM, LARGE, COMMON }
 
 class PriceType {
   String? name;
@@ -49,5 +64,28 @@ class PriceType {
       default:
         return 0;
     }
+  }
+
+  set setPriceTypeInst(int value) {
+    switch (value) {
+      case 1:
+        type = PriceTypeInst.SMALL;
+        break;
+      case 2:
+        type = PriceTypeInst.MEDIUM;
+        break;
+      case 3:
+        type = PriceTypeInst.LARGE;
+        break;
+      default:
+        type = PriceTypeInst.COMMON;
+        break;
+    }
+  }
+
+  factory PriceType.fromDocSnap(dynamic payload) {
+    var priceType = PriceType(price: payload['price'], name: payload['name']);
+    priceType.setPriceTypeInst = payload['type'] ?? 0;
+    return priceType;
   }
 }

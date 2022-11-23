@@ -1,14 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:foodx/channel/whatsapp_channel.dart';
 import 'package:foodx/env/color.dart';
 import 'package:foodx/env/size.dart';
 import 'package:foodx/env/style.dart';
-import 'package:foodx/models/food.dart';
+import 'package:foodx/models/Food.dart';
 import 'package:foodx/models/food_category.dart';
 import 'package:foodx/models/shop.dart';
-import 'package:foodx/pages/components/FoodTile.dart';
-import 'package:foodx/pages/components/img.dart';
 
 class AddFoodPage extends StatefulWidget {
   Shop shop;
@@ -20,7 +19,6 @@ class AddFoodPage extends StatefulWidget {
 
 class _AddFoodPageState extends State<AddFoodPage> {
   Shop shop;
-  List<FoodCategory> foodCategories = [];
 
   ///
   ///
@@ -37,13 +35,11 @@ class _AddFoodPageState extends State<AddFoodPage> {
 
   ///
   ///
-  String category = '';
+  late String category;
 
   ///
   ///
-  _AddFoodPageState(this.shop) {
-    foodCategories = shop.menu!.categories!;
-  }
+  _AddFoodPageState(this.shop);
 
   @override
   void initState() {
@@ -60,8 +56,6 @@ class _AddFoodPageState extends State<AddFoodPage> {
     _mediumPriceController.dispose();
     _largePriceController.dispose();
 
-    ///
-    ///
     super.dispose();
   }
 
@@ -113,7 +107,7 @@ class _AddFoodPageState extends State<AddFoodPage> {
 
                 Space.h(16),
                 DropdownButtonFormField(
-                  value: "A",
+                  value: shop.menu![0].id,
                   style: TxtStyle.custom(16, kBlack),
                   decoration: InputDecoration(
                     contentPadding: PadMarg.a16,
@@ -134,16 +128,12 @@ class _AddFoodPageState extends State<AddFoodPage> {
                     alignLabelWithHint: true,
                     hintStyle: TxtStyle.custom(16, kGrey),
                   ),
-                  items: const [
-                    DropdownMenuItem(
-                      child: Text("Asd"),
-                      value: "A",
-                    ),
-                    DropdownMenuItem(
-                      child: Text("Asd"),
-                      value: "B",
-                    ),
-                  ],
+                  items: List.generate(
+                      shop.menu!.length,
+                      (index) => DropdownMenuItem(
+                            child: Text("${shop.menu![index].name}"),
+                            value: shop.menu![index].id,
+                          )),
                   onChanged: (value) {
                     category = value.toString();
                   },
@@ -193,6 +183,7 @@ class _AddFoodPageState extends State<AddFoodPage> {
                     SizedBox(
                       width: preferedWidth(context, 0.5),
                       child: TextFormField(
+                        controller: _smallPriceController,
                         keyboardType: const TextInputType.numberWithOptions(
                             decimal: true, signed: false),
                         inputFormatters: [
@@ -302,6 +293,7 @@ class _AddFoodPageState extends State<AddFoodPage> {
                     SizedBox(
                       width: preferedWidth(context, 0.5),
                       child: TextFormField(
+                        controller: _largePriceController,
                         keyboardType: const TextInputType.numberWithOptions(
                             decimal: true, signed: false),
                         inputFormatters: [
@@ -360,36 +352,44 @@ class _AddFoodPageState extends State<AddFoodPage> {
                     ElevatedButton(
                         style: ButtonStyle(
                             padding: MaterialStateProperty.resolveWith(
-                                (states) => PadMarg.vh(8, 16)),
+                                (states) => const PadMarg.vh(8, 16)),
                             backgroundColor: MaterialStateProperty.resolveWith(
                                 (states) => kPrimaryColor)),
-                        onPressed: () {
+                        onPressed: () async {
                           if (_formKey.currentState!.validate()) {
-                            final food = Food(
-                                name: _nameTxtController.text.toString(),
-                                about: _descTxtController.text.toString(),
-                                priceTypes: [
-                                  PriceType(
-                                      price: _smallPriceController.text
-                                              .toString() ??
-                                          "0.0",
-                                      type: PriceTypeInst.SMALL),
-                                  PriceType(
-                                      price: _mediumPriceController.text
-                                              .toString() ??
-                                          "0.0",
-                                      type: PriceTypeInst.MEDIUM),
-                                  PriceType(
-                                      price: _largePriceController.text
-                                              .toString() ??
-                                          "0.0",
-                                      type: PriceTypeInst.SMALL)
-                                ],
-                                status: FoodStatus.AVALIABLE);
+                            CollectionReference foods =
+                                FirebaseFirestore.instance.collection('foods');
 
-                            print(food.toString());
+                            await foods.add({
+                              'name': _nameTxtController.text.toString(),
+                              'desc': _descTxtController.text.toString(),
+                              'portion': [
+                                {
+                                  'name': 'SMALL',
+                                  'price':
+                                      _smallPriceController.text.toString(),
+                                  'type': 1
+                                },
+                                {
+                                  'name': 'MEDIUM',
+                                  'price':
+                                      _mediumPriceController.text.toString(),
+                                  'type': 2
+                                },
+                                {
+                                  'name': 'LARGE',
+                                  'price':
+                                      _largePriceController.text.toString(),
+                                  'type': 3
+                                }
+                              ],
+                              'category': "breakfest",
+                              'shop': 'lsuJdCnddF2GtBljRnoJ',
+                              'reviews': [],
+                              'menu': category
+                            });
 
-                            Navigator.pop(context, food);
+                            Navigator.pop(context);
                           }
                         },
                         child:

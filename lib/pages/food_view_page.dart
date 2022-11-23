@@ -27,7 +27,7 @@ class _FoodViewPageState extends State<FoodViewPage> {
           pinned: false,
           floating: false,
           expandedHeight: preferedHeight(context, 0.3),
-          backgroundColor: kSecondaryColor,
+          backgroundColor: kDarkBlue,
           flexibleSpace: FlexibleSpaceBar(
             collapseMode: CollapseMode.pin,
             titlePadding: PadMarg.vh(0, 0),
@@ -45,10 +45,14 @@ class _FoodViewPageState extends State<FoodViewPage> {
                 ],
               ),
             ),
-            background: Image.asset(
-              food.imgUrl!,
-              fit: BoxFit.cover,
-            ),
+            // background: food.imgUrl == null
+            //     ? Container(
+            //         color: kPrimaryColor,
+            //       )
+            //     : Image.asset(
+            //         food.imgUrl!,
+            //         fit: BoxFit.cover,
+            //       ),
           ),
         ),
         SliverList(

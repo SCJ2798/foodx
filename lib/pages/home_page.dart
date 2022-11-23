@@ -172,9 +172,9 @@ class _HomePageState extends State<HomePage> {
                   .startsWith(query.toLowerCase()))
               .toList();
           print(shopList);
-          return shopList;
+          return [];
         } else {
-          return shops;
+          return [];
         }
       },
     );

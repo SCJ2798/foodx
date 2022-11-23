@@ -1,3 +1,4 @@
+import 'package:foodx/models/Food.dart';
 import 'package:foodx/models/food_menu.dart';
 import 'package:foodx/models/review.dart';
 
@@ -10,7 +11,8 @@ class Shop {
   String? location;
 
   List<Review>? reviews;
-  FoodMenu? menu;
+  List<FoodMenu>? menu;
+  List<Food>? foods;
 
   Shop(
       {required this.name,
@@ -20,5 +22,6 @@ class Shop {
       this.location,
       this.rating,
       this.reviews,
+      this.foods,
       this.menu});
 }

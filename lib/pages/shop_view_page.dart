@@ -25,7 +25,7 @@ class _ShopViewPageState extends State<ShopViewPage> {
   List<FoodCategory> foodCategories = [];
 
   _ShopViewPageState(this.shop) {
-    foodCategories = shop.menu!.categories!;
+    foodCategories = [];
   }
 
   @override

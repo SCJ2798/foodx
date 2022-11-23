@@ -1,5 +1,7 @@
 import 'package:device_preview/device_preview.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:foodx/firebase_options.dart';
 import 'package:foodx/pages/add_food_page.dart';
 import 'package:foodx/pages/food_shop_view.dart';
 import 'package:foodx/pages/food_view_page.dart';
@@ -14,7 +16,9 @@ import 'package:foodx/seeds/shops.dart';
 //   ));
 // }
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.android);
   runApp(const MyApp());
 }
 
@@ -32,6 +36,6 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: FoodShopOwnerViewPage(shop: shops[0]));
+        home: FoodShopOwnerViewPage(shop: tshops[0]));
   }
 }

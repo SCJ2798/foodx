@@ -24,7 +24,9 @@ class FoodTile extends StatelessWidget {
         contentPadding: PadMarg.a8,
         horizontalTitleGap: 16,
         minLeadingWidth: 16,
-        leading: Img.avatar(food.imgUrl!),
+        leading: food.imgUrl!.isEmpty
+            ? Icon(Icons.fastfood)
+            : Img.avatar(food.imgUrl!),
         title: Text(food.name!, style: TxtStyle.custom(16, kSecondaryColor)),
         subtitle: Text(
           "LKR ${food.priceTypes![0].price}",
